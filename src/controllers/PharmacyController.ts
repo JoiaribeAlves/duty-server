@@ -17,7 +17,23 @@ class PharmacyController {
 
 			await Pharmacy.create(req.body);
 
-			return res.status(201).json({ message: "Pharmacy registered successfully." });
+			return res
+				.status(201)
+				.json({ message: "Pharmacy registered successfully." });
+		} catch (error) {
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
+
+	async read(req: Request, res: Response) {
+		try {
+			const pharmacies = await Pharmacy.find();
+
+			if (pharmacies.length === 0) {
+				return res.status(200).json({ message: "No records found." });
+			}
+
+			return res.status(200).json({ pharmacies });
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error." });
 		}
