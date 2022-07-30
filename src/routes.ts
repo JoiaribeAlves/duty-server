@@ -9,6 +9,9 @@ router.get("/", (req, res) => {
 	res.status(200).json({});
 });
 
+router.get("/pharmacies", PharmacyController.read);
+
+
 // Private
 router.post("/register/pharmacy", PharmacyController.create);
 
