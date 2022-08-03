@@ -1,6 +1,21 @@
 import mongoose from "mongoose";
 
-const PharmacySchema = new mongoose.Schema({
+interface IPharmacy {
+	name: string;
+	telephone: string;
+	address: {
+		zipCode: string;
+		city: string;
+		state: string;
+		street: string;
+		number: number;
+		district: string;
+		complement: string;
+	};
+	createdAt: Date;
+}
+
+const PharmacySchema = new mongoose.Schema<IPharmacy>({
 	name: {
 		type: String,
 		required: true,
@@ -22,12 +37,12 @@ const PharmacySchema = new mongoose.Schema({
 		city: {
 			type: String,
 			required: true,
-			default: "Jaru"
+			default: "Jaru",
 		},
 		state: {
 			type: String,
 			required: true,
-			default: "RO"
+			default: "RO",
 		},
 		street: {
 			type: String,
@@ -51,6 +66,6 @@ const PharmacySchema = new mongoose.Schema({
 	},
 });
 
-const Pharmacy = mongoose.model("Pharmacy", PharmacySchema);
+const Pharmacy = mongoose.model<IPharmacy>("Pharmacy", PharmacySchema);
 
 export default Pharmacy;
