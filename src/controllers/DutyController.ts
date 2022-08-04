@@ -17,10 +17,10 @@ interface IDutyController {
 
 class DutyController {
 	async create(req: Request, res: Response) {
-		const { date } = req.body;
+		const { startDate } = req.body;
 
 		try {
-			const duty = await Duty.findOne({ date });
+			const duty = await Duty.findOne({ startDate });
 
 			if (duty) {
 				return res.status(422).json({ error: "Unavailable date." });
@@ -98,6 +98,24 @@ class DutyController {
 			await Duty.updateOne({ _id: id }, req.body);
 
 			return res.status(200).json({ message: "Duty updated successfully." });
+		} catch (error) {
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
+
+	async delete(req: Request, res: Response) {
+		const { id } = req.params;
+
+		try {
+			const duty = await Duty.findOne({ _id: id });
+
+			if (!duty) {
+				return res.status(404).json({ error: "Duty not found." });
+			}
+
+			await Duty.deleteOne({ _id: id });
+
+			return res.status(200).json({ message: "Duty deleted successfully." });
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error." });
 		}
