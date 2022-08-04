@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 interface IDuty {
 	pharmacyId: string;
-	date: Date;
+	startDate: Date;
+	endDate: Date;
 	createdAt: Date;
 }
 
@@ -11,7 +12,11 @@ const DutySchema = new mongoose.Schema<IDuty>({
 		type: String,
 		required: true,
 	},
-	date: {
+	startDate: {
+		type: Date,
+		required: true,
+	},
+	endDate: {
 		type: Date,
 		required: true,
 	},
