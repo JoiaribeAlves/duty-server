@@ -13,6 +13,9 @@ router.get("/", (req, res) => {
 router.get("/pharmacies", PharmacyController.read);
 router.get("/pharmacy/:id", PharmacyController.search);
 
+router.get("/duties", DutyController.read);
+router.get("/duty/:date", DutyController.search);
+
 // Private
 router.post("/register/pharmacy", PharmacyController.create);
 router.patch("/update/pharmacy/:id", PharmacyController.update);

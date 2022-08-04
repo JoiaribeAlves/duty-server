@@ -15,14 +15,17 @@ const DutySchema = new mongoose.Schema<IDuty>({
 	startDate: {
 		type: Date,
 		required: true,
+		unique: true,
 	},
 	endDate: {
 		type: Date,
 		required: true,
+		unique: true,
 	},
 	createdAt: {
 		type: Date,
 		default: Date.now,
+		select: false,
 	},
 });
 
