@@ -84,6 +84,24 @@ class DutyController {
 			return res.status(500).json({ error: "Internal server error. " });
 		}
 	}
+
+	async update(req: Request, res: Response) {
+		const { id } = req.params;
+
+		try {
+			const duty = await Duty.findOne({ _id: id });
+
+			if (!duty) {
+				return res.status(404).json({ error: "Duty not found." });
+			}
+
+			await Duty.updateOne({ _id: id }, req.body);
+
+			return res.status(200).json({ message: "Duty updated successfully." });
+		} catch (error) {
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
 }
 
 export default new DutyController();

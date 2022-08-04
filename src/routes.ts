@@ -22,5 +22,6 @@ router.patch("/update/pharmacy/:id", PharmacyController.update);
 router.delete("/delete/pharmacy/:id", PharmacyController.delete);
 
 router.post("/register/duty", DutyController.create);
+router.patch("/update/duty/:id", DutyController.update);
 
 export default router;
