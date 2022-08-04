@@ -10,9 +10,11 @@ router.get("/", (req, res) => {
 });
 
 router.get("/pharmacies", PharmacyController.read);
-
+router.get("/pharmacy/:id", PharmacyController.search);
 
 // Private
 router.post("/register/pharmacy", PharmacyController.create);
+router.patch("/update/pharmacy/:id", PharmacyController.update);
+router.delete("/delete/pharmacy/:id", PharmacyController.delete);
 
 export default router;
