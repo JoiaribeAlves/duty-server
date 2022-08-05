@@ -40,8 +40,8 @@ class DutyController {
 		try {
 			const duties = await Duty.find();
 
-			if (!duties) {
-				return res.status(404).json({ error: "No records found." });
+			if (duties.length === 0) {
+				return res.status(404).json({});
 			}
 
 			return res.status(200).json(duties);
