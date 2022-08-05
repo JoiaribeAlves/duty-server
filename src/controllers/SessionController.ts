@@ -16,7 +16,7 @@ class SessionController {
 					.json({ error: "Email and Password is required." });
 			}
 
-			const user = await User.findOne({ email });
+			const user = await User.findOne({ email }).select("+password");
 
 			if (!user || !passwordCompare(password, user.password)) {
 				return res.status(404).json({ error: "User or Password invalid." });
