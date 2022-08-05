@@ -11,6 +11,7 @@ interface IPharmacy {
 		number: number;
 		district: string;
 		complement: string;
+		linkToMap: string;
 	};
 	createdAt: Date;
 }
@@ -58,6 +59,10 @@ const PharmacySchema = new mongoose.Schema<IPharmacy>({
 		},
 		complement: {
 			type: String,
+		},
+		linkToMap: {
+			type: String,
+			required: true,
 		},
 	},
 	createdAt: {
