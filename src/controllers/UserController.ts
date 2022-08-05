@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { createPasswordHash } from "../services";
+import { createPasswordHash, passwordCompare } from "../services";
 import User from "../models/UserModel";
 
 class UserController {
@@ -14,7 +14,7 @@ class UserController {
 				return res.status(422).json({ error: "User already exists." });
 			}
 
-			const passwordHash = createPasswordHash(password);
+			const passwordHash = await createPasswordHash(password);
 
 			await User.create({
 				email,
@@ -39,22 +39,25 @@ class UserController {
 
 	async update(req: Request, res: Response) {
 		try {
-			const { email, password } = req.body;
+			const { email, password, newPassword } = req.body;
 
-			const user = await User.findOne({ email });
+			const user = await User.findOne({ email }).select("+password");
 
-			if (user) {
-				return res.status(422).json({ error: "User already exists." });
+			if (!user || !(await passwordCompare(password, user.password))) {
+				return res.status(401).json({ error: "User os Password invalid." });
 			}
 
-			const passwordHash = createPasswordHash(password);
+			const passwordHash = await createPasswordHash(newPassword);
 
-			await User.create({
-				email,
-				password: passwordHash,
-			});
+			await User.updateOne(
+				{ email },
+				{
+					email,
+					password: passwordHash,
+				}
+			);
 
-			return res.status(201).json({ message: "User created succesfully." });
+			return res.status(201).json({ message: "User updated succesfully." });
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error." });
 		}
