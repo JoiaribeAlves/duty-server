@@ -28,7 +28,7 @@ class PharmacyController {
 			const pharmacies = await Pharmacy.find();
 
 			if (pharmacies.length === 0) {
-				return res.status(200).json({ message: "No records found." });
+				return res.status(200).json({});
 			}
 
 			return res.status(200).json({ pharmacies });
