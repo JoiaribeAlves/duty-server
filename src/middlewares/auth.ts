@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 interface IUserRequest extends Request {
-	user_id: string;
+	user_id?: string;
 }
 
 interface IPayloadData {
