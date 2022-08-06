@@ -3,20 +3,16 @@ import { Request, Response } from "express";
 import Duty from "../models/DutyModel";
 import Pharmacy from "../models/PharmacyModel";
 
-interface IDutyControllerResponse {
-	error: string;
-}
-
 interface IDutyController {
-	create(req: Request, res: Response): Promise<IDutyControllerResponse>;
-	read(): void;
-	search(): void;
-	update(): void;
-	delete(): void;
+	create(req: Request, res: Response): Promise<Response>;
+	read(req: Request, res: Response): Promise<Response>;
+	search(req: Request, res: Response): Promise<Response>;
+	update(req: Request, res: Response): Promise<Response>;
+	delete(req: Request, res: Response): Promise<Response>;
 }
 
-class DutyController {
-	async create(req: Request, res: Response) {
+class DutyController implements IDutyController {
+	public async create(req: Request, res: Response) {
 		const { startDate } = req.body;
 
 		try {
@@ -34,7 +30,7 @@ class DutyController {
 		}
 	}
 
-	async read(req: Request, res: Response) {
+	public async read(req: Request, res: Response) {
 		const { date } = req.params;
 
 		try {
@@ -50,7 +46,7 @@ class DutyController {
 		}
 	}
 
-	async search(req: Request, res: Response) {
+	public async search(req: Request, res: Response) {
 		const { date } = req.params;
 
 		try {
@@ -85,7 +81,7 @@ class DutyController {
 		}
 	}
 
-	async update(req: Request, res: Response) {
+	public async update(req: Request, res: Response) {
 		const { id } = req.params;
 
 		try {
@@ -103,7 +99,7 @@ class DutyController {
 		}
 	}
 
-	async delete(req: Request, res: Response) {
+	public async delete(req: Request, res: Response) {
 		const { id } = req.params;
 
 		try {
