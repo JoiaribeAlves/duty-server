@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"description": "API do site",
 	"main": "index.js",
+	"engines": {
+		"node": "16.x"
+	},
 	"scripts": {
 		"dev": "tsnd ./src/index.ts",
 		"build": "tsc",
