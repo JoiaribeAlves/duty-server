@@ -58,7 +58,7 @@ class DutyController implements IDutyController {
 					.json({ error: "No shift created for the informed date." });
 			}
 
-			const pharmacy = await Pharmacy.findOne({ _id: duty.pharmacyId });
+			const pharmacy = await Pharmacy.findById(duty.pharmacyId);
 
 			return res.status(200).json({
 				duty: {
@@ -68,11 +68,13 @@ class DutyController implements IDutyController {
 				pharmacy: {
 					name: pharmacy?.name,
 					telephone: pharmacy?.telephone,
+					whatsapp: pharmacy?.whatsapp,
 					address: {
 						street: pharmacy?.address.street,
 						number: pharmacy?.address.number,
 						district: pharmacy?.address.district,
 						complement: pharmacy?.address.complement,
+						linkToMap: pharmacy?.address.linkToMap,
 					},
 				},
 			});
