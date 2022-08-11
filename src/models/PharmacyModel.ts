@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 interface IPharmacy {
 	name: string;
 	telephone: string;
+	whatsapp?: string;
 	address: {
 		zipCode: string;
 		city: string;
@@ -10,66 +11,69 @@ interface IPharmacy {
 		street: string;
 		number: number;
 		district: string;
-		complement: string;
+		complement?: string;
 		linkToMap: string;
 	};
 	createdAt: Date;
 }
 
-const PharmacySchema = new mongoose.Schema<IPharmacy>({
-	name: {
-		type: String,
-		required: true,
-		uppercase: true,
-		trim: true,
+const PharmacySchema = new mongoose.Schema<IPharmacy>(
+	{
+		name: {
+			type: String,
+			required: true,
+			uppercase: true,
+			trim: true,
+		},
+		telephone: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		whatsapp: {
+			type: String,
+			unique: true,
+			trim: true,
+		},
+		address: {
+			zipCode: {
+				type: String,
+				required: true,
+				default: "76890-000",
+			},
+			city: {
+				type: String,
+				required: true,
+				default: "Jaru",
+			},
+			state: {
+				type: String,
+				required: true,
+				default: "RO",
+			},
+			street: {
+				type: String,
+				required: true,
+			},
+			number: {
+				type: Number,
+				required: true,
+			},
+			district: {
+				type: String,
+				required: true,
+			},
+			complement: {
+				type: String,
+			},
+			linkToMap: {
+				type: String,
+				required: true,
+			},
+		},
 	},
-	telephone: {
-		type: String,
-		required: true,
-		unique: true,
-		trim: true,
-	},
-	address: {
-		zipCode: {
-			type: String,
-			required: true,
-			default: "76890-000",
-		},
-		city: {
-			type: String,
-			required: true,
-			default: "Jaru",
-		},
-		state: {
-			type: String,
-			required: true,
-			default: "RO",
-		},
-		street: {
-			type: String,
-			required: true,
-		},
-		number: {
-			type: Number,
-			required: true,
-		},
-		district: {
-			type: String,
-			required: true,
-		},
-		complement: {
-			type: String,
-		},
-		linkToMap: {
-			type: String,
-			required: true,
-		},
-	},
-	createdAt: {
-		type: Date,
-		default: Date.now,
-	},
-});
+	{ timestamps: true }
+);
 
 const Pharmacy = mongoose.model<IPharmacy>("Pharmacy", PharmacySchema);
 
