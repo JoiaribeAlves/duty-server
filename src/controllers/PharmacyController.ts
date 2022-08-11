@@ -28,10 +28,26 @@ class PharmacyController {
 			const pharmacies = await Pharmacy.find();
 
 			if (pharmacies.length === 0) {
-				return res.status(404).json({});
+				return res.status(200).json({});
 			}
 
-			return res.status(200).json({ pharmacies });
+			const allPharmacies = pharmacies.map((pharmacy) => {
+				return {
+					id: pharmacy._id,
+					name: pharmacy.name,
+					telephone: pharmacy.telephone,
+					whatsapp: pharmacy.whatsapp,
+					address: {
+						street: pharmacy.address.street,
+						number: pharmacy.address.number,
+						district: pharmacy.address.district,
+						complement: pharmacy.address.complement,
+						linkToMap: pharmacy.address.linkToMap,
+					},
+				};
+			});
+
+			return res.status(200).json(allPharmacies);
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error." });
 		}
@@ -41,13 +57,24 @@ class PharmacyController {
 		const { id } = req.params;
 
 		try {
-			const pharmacy = await Pharmacy.findOne({ _id: id });
+			const pharmacy = await Pharmacy.findById(id);
 
 			if (!pharmacy) {
 				return res.status(404).json({ error: "Pharmacy not found." });
 			}
 
-			return res.status(200).json(pharmacy);
+			return res.status(200).json({
+				name: pharmacy.name,
+				telephone: pharmacy.telephone,
+				whatsapp: pharmacy.whatsapp,
+				address: {
+					street: pharmacy.address.street,
+					number: pharmacy.address.number,
+					district: pharmacy.address.district,
+					complement: pharmacy.address.complement,
+					linkToMap: pharmacy.address.linkToMap,
+				},
+			});
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error." });
 		}
@@ -57,7 +84,7 @@ class PharmacyController {
 		const { id } = req.params;
 
 		try {
-			const pharmacy = await Pharmacy.findOne({ _id: id });
+			const pharmacy = await Pharmacy.findById(id);
 
 			if (!pharmacy) {
 				return res.status(404).json({ error: "Pharmacy not found." });
@@ -77,7 +104,7 @@ class PharmacyController {
 		const { id } = req.params;
 
 		try {
-			const pharmacy = Pharmacy.findOne({ _id: id });
+			const pharmacy = Pharmacy.findById(id);
 
 			if (!pharmacy) {
 				return res.status(404).json({ error: "Pharmacy not found. " });
