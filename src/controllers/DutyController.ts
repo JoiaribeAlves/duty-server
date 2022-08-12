@@ -70,6 +70,8 @@ class DutyController implements IDutyController {
 					telephone: pharmacy?.telephone,
 					whatsapp: pharmacy?.whatsapp,
 					address: {
+						city: pharmacy?.address.city,
+						state: pharmacy?.address.state,
 						street: pharmacy?.address.street,
 						number: pharmacy?.address.number,
 						district: pharmacy?.address.district,
