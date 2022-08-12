@@ -14,7 +14,6 @@ interface IPharmacy {
 		complement?: string;
 		linkToMap: string;
 	};
-	createdAt: Date;
 }
 
 const PharmacySchema = new mongoose.Schema<IPharmacy>(
@@ -32,8 +31,7 @@ const PharmacySchema = new mongoose.Schema<IPharmacy>(
 		},
 		whatsapp: {
 			type: String,
-			unique: true,
-			trim: true,
+			default: "",
 		},
 		address: {
 			zipCode: {

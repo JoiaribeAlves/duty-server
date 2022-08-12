@@ -4,31 +4,28 @@ interface IUser {
 	email: string;
 	password: string;
 	isAdmin: true | false;
-	createdAt: Date;
 }
 
-const UserSchema = new mongoose.Schema<IUser>({
-	email: {
-		type: String,
-		required: true,
-		unique: true,
+const UserSchema = new mongoose.Schema<IUser>(
+	{
+		email: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		password: {
+			type: String,
+			required: true,
+			select: false,
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false,
+			select: false,
+		},
 	},
-	password: {
-		type: String,
-		required: true,
-		select: false,
-	},
-	isAdmin: {
-		type: Boolean,
-		default: false,
-		select: false,
-	},
-	createdAt: {
-		type: Date,
-		default: Date.now,
-		select: false,
-	},
-});
+	{ timestamps: true }
+);
 
 const User = mongoose.model<IUser>("User", UserSchema);
 
