@@ -31,16 +31,22 @@ class DutyController implements IDutyController {
 	}
 
 	public async read(req: Request, res: Response) {
-		const { date } = req.params;
-
 		try {
 			const duties = await Duty.find();
 
 			if (duties.length === 0) {
-				return res.status(404).json({});
+				return res.status(200).json({});
 			}
 
-			return res.status(200).json(duties);
+			const allduties = duties.map((duty) => {
+				return {
+					id: duty._id,
+					startDate: duty.startDate,
+					endDate: duty.endDate,
+				};
+			});
+
+			return res.status(200).json(allduties);
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error. " });
 		}
