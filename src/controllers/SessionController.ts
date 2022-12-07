@@ -23,6 +23,7 @@ class SessionController {
 			}
 
 			return res.status(200).json({
+				user: user.email,
 				token: jwt.sign({ id: user.id }, process.env.APP_SECRET!, {
 					expiresIn: "1d",
 					subject: user.id,
