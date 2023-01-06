@@ -31,29 +31,39 @@ class DutyController implements IDutyController {
 	}
 
 	public async read(req: Request, res: Response) {
-		const { year, month } = req.query;
+		const { month } = req.query;
 
 		try {
-			let duties = [];
+			if (month) {
+				const filteredDuties = await Duty.find({ month });
 
-			if (year && month) {
-				duties = await Duty.find({ startDate: /`${year}-${month}`/ });
-			} else {
-				duties = await Duty.find();
+				const allFilteredDuties = filteredDuties.map((d) => {
+					return {
+						id: d._id,
+						pharmacyId: d.pharmacyId,
+						month: d.month,
+						startDate: d.startDate,
+						endDate: d.endDate,
+					};
+				});
+
+				return res.status(200).json(allFilteredDuties);
 			}
 
-			const allDuties = duties.map((duty) => {
+			const duties = await Duty.find();
+
+			const allDuties = duties.map((d) => {
 				return {
-					id: duty._id,
-					pharmacyId: duty.pharmacyId,
-					startDate: duty.startDate,
-					endDate: duty.endDate,
+					id: d._id,
+					pharmacyId: d.pharmacyId,
+					startDate: d.startDate,
+					endDate: d.endDate,
 				};
 			});
 
 			return res.status(200).json(allDuties);
 		} catch (error) {
-			return res.status(500).json({ error: "Internal server error. " });
+			return res.status(500).json({ error: "Internal server error." + error });
 		}
 	}
 
