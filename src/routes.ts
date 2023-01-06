@@ -11,7 +11,7 @@ const router = Router();
 /* Public Routes */
 // Index
 router.get("/", (req, res) => {
-	res.status(200).json({ message: "OK" });
+	res.status(200).json({ message: "OK!" });
 });
 
 // Pharmacy
