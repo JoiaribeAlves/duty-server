@@ -14,6 +14,7 @@ interface IPharmacy {
 		complement?: string;
 		linkToMap: string;
 	};
+	imageUrl: string;
 }
 
 const PharmacySchema = new mongoose.Schema<IPharmacy>(
@@ -68,6 +69,9 @@ const PharmacySchema = new mongoose.Schema<IPharmacy>(
 				type: String,
 				required: true,
 			},
+		},
+		imageUrl: {
+			type: String,
 		},
 	},
 	{ timestamps: true }
