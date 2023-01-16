@@ -46,6 +46,7 @@ class PharmacyController {
 						complement: pharmacy.address.complement,
 						linkToMap: pharmacy.address.linkToMap,
 					},
+					imageUrl: pharmacy.imageUrl,
 				};
 			});
 
@@ -78,6 +79,7 @@ class PharmacyController {
 					complement: pharmacy.address.complement,
 					linkToMap: pharmacy.address.linkToMap,
 				},
+				imageUrl: pharmacy.imageUrl,
 			});
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error." });
