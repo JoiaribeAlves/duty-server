@@ -106,6 +106,29 @@ class DutyController implements IDutyController {
 		}
 	}
 
+	public async searchById(req: Request, res: Response) {
+		const { id } = req.params;
+
+		try {
+			const duty = await Duty.findOne({ _id: id });
+
+			if (!duty) {
+				return res.status(404).json({ error: "Shift not found." });
+			}
+
+			return res
+				.status(200)
+				.json({
+					pharmacyId: duty.pharmacyId,
+					month: duty.month,
+					startDate: duty.startDate,
+					endDate: duty.endDate,
+				});
+		} catch (error) {
+			return res.status(500).json({ error: "Internal server error. " });
+		}
+	}
+
 	public async update(req: Request, res: Response) {
 		const { id } = req.params;
 
