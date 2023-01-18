@@ -6,7 +6,9 @@ import Pharmacy from "../models/PharmacyModel";
 interface IDutyController {
 	create(req: Request, res: Response): Promise<Response>;
 	read(req: Request, res: Response): Promise<Response>;
-	search(req: Request, res: Response): Promise<Response>;
+	searchByDate(req: Request, res: Response): Promise<Response>;
+	searchById(req: Request, res: Response): Promise<Response>;
+	searchByMonth(req: Request, res: Response): Promise<Response>;
 	update(req: Request, res: Response): Promise<Response>;
 	delete(req: Request, res: Response): Promise<Response>;
 }
@@ -31,43 +33,26 @@ class DutyController implements IDutyController {
 	}
 
 	public async read(req: Request, res: Response) {
-		const { month } = req.query;
-
 		try {
-			if (month) {
-				const filteredDuties = await Duty.find({ month });
-
-				const allFilteredDuties = filteredDuties.map((d) => {
-					return {
-						id: d._id,
-						pharmacyId: d.pharmacyId,
-						month: d.month,
-						startDate: d.startDate,
-						endDate: d.endDate,
-					};
-				});
-
-				return res.status(200).json(allFilteredDuties);
-			}
-
 			const duties = await Duty.find();
 
-			const allDuties = duties.map((d) => {
+			const filteredDuties = duties.map((d) => {
 				return {
 					id: d._id,
 					pharmacyId: d.pharmacyId,
+					month: d.month,
 					startDate: d.startDate,
 					endDate: d.endDate,
 				};
 			});
 
-			return res.status(200).json(allDuties);
+			return res.status(200).json(filteredDuties);
 		} catch (error) {
-			return res.status(500).json({ error: "Internal server error." + error });
+			return res.status(500).json({ error: "Internal server error." });
 		}
 	}
 
-	public async search(req: Request, res: Response) {
+	public async searchByDate(req: Request, res: Response) {
 		const { date } = req.params;
 
 		try {
@@ -116,16 +101,52 @@ class DutyController implements IDutyController {
 				return res.status(404).json({ error: "Shift not found." });
 			}
 
-			return res
-				.status(200)
-				.json({
-					pharmacyId: duty.pharmacyId,
-					month: duty.month,
-					startDate: duty.startDate,
-					endDate: duty.endDate,
-				});
+			return res.status(200).json({
+				pharmacyId: duty.pharmacyId,
+				month: duty.month,
+				startDate: duty.startDate,
+				endDate: duty.endDate,
+			});
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error. " });
+		}
+	}
+
+	public async searchByMonth(req: Request, res: Response) {
+		const { month } = req.query;
+
+		try {
+			if (month) {
+				const filteredDuties = await Duty.find({ month });
+
+				const allFilteredDuties = filteredDuties.map((d) => {
+					return {
+						id: d._id,
+						pharmacyId: d.pharmacyId,
+						month: d.month,
+						startDate: d.startDate,
+						endDate: d.endDate,
+					};
+				});
+
+				return res.status(200).json(allFilteredDuties);
+			}
+
+			const duties = await Duty.find();
+
+			const allDuties = duties.map((d) => {
+				return {
+					id: d._id,
+					pharmacyId: d.pharmacyId,
+					month: d.month,
+					startDate: d.startDate,
+					endDate: d.endDate,
+				};
+			});
+
+			return res.status(200).json(allDuties);
+		} catch (error) {
+			return res.status(500).json({ error: "Internal server error." + error });
 		}
 	}
 
