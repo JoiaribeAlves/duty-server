@@ -99,7 +99,7 @@ class DutyController implements IDutyController {
 		const { id } = req.params;
 
 		try {
-			const duty = await Duty.findById({ id });
+			const duty = await Duty.findOne({ _id: id });
 
 			if (!duty) {
 				return res.status(404).json({ error: "Duty not found." });
