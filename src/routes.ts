@@ -16,12 +16,13 @@ router.get("/", (req, res) => {
 
 // Pharmacy
 router.get("/pharmacies", PharmacyController.read);
-router.get("/pharmacy/:id", PharmacyController.search);
+router.get("/pharmacies/:id", PharmacyController.search);
 
 // Duty
 router.get("/duties", DutyController.read);
-router.get("/duty/:date", DutyController.search);
-router.get("/duty-by-id/:id", DutyController.searchById);
+router.get("/duties/date/:date", DutyController.searchByDate);
+router.get("/duties/id/:id", DutyController.searchById);
+router.get("/duties/month/:month", DutyController.searchByMonth);
 
 // Session
 router.post("/session", SessionController.index);
