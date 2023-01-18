@@ -68,10 +68,13 @@ class DutyController implements IDutyController {
 
 			return res.status(200).json({
 				duty: {
+					id: duty._id,
+					month: duty.month,
 					startDate: duty.startDate,
 					endDate: duty.endDate,
 				},
 				pharmacy: {
+					id: pharmacy?._id,
 					name: pharmacy?.name,
 					telephone: pharmacy?.telephone,
 					whatsapp: pharmacy?.whatsapp,
@@ -84,6 +87,7 @@ class DutyController implements IDutyController {
 						complement: pharmacy?.address.complement,
 						linkToMap: pharmacy?.address.linkToMap,
 					},
+					imageUrl: pharmacy?.imageUrl,
 				},
 			});
 		} catch (error) {
