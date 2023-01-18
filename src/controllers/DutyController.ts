@@ -137,28 +137,18 @@ class DutyController implements IDutyController {
 	}
 
 	public async searchByMonth(req: Request, res: Response) {
-		const { month } = req.query;
+		const { month } = req.params;
 
 		try {
-			if (month) {
-				const filteredDuties = await Duty.find({ month });
+			const duties = await Duty.find({ month });
 
-				const allFilteredDuties = filteredDuties.map((d) => {
-					return {
-						id: d._id,
-						pharmacyId: d.pharmacyId,
-						month: d.month,
-						startDate: d.startDate,
-						endDate: d.endDate,
-					};
-				});
-
-				return res.status(200).json(allFilteredDuties);
+			if (!duties) {
+				return res
+					.status(404)
+					.json({ error: `No duty registered for the month of ${month}.` });
 			}
 
-			const duties = await Duty.find();
-
-			const allDuties = duties.map((d) => {
+			const filteredDuties = duties.map((d) => {
 				return {
 					id: d._id,
 					pharmacyId: d.pharmacyId,
@@ -168,9 +158,9 @@ class DutyController implements IDutyController {
 				};
 			});
 
-			return res.status(200).json(allDuties);
+			return res.status(200).json(filteredDuties);
 		} catch (error) {
-			return res.status(500).json({ error: "Internal server error." + error });
+			return res.status(500).json({ error: "Internal server error." });
 		}
 	}
 
