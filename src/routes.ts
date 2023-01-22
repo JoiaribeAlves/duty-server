@@ -42,8 +42,8 @@ router.patch("/pharmacies/update/:id", PharmacyController.update);
 router.delete("/pharmacies/delete/:id", PharmacyController.delete);
 
 // Duty
-router.post("/register/duty", DutyController.create);
-router.patch("/update/duty/:id", DutyController.update);
-router.delete("/delete/duty/:id", DutyController.delete);
+router.post("/duties/register", DutyController.create);
+router.patch("/duties/update/:id", DutyController.update);
+router.delete("/duties/delete/:id", DutyController.delete);
 
 export default router;
