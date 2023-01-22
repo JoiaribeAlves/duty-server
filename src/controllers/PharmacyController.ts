@@ -4,7 +4,7 @@ import Pharmacy from "../models/PharmacyModel";
 
 class PharmacyController {
 	async create(req: Request, res: Response) {
-		const { telephone } = req.body;
+		const { telephone } = req.body.data;
 
 		try {
 			const pharmacy = await Pharmacy.findOne({ telephone });
@@ -13,7 +13,7 @@ class PharmacyController {
 				return res.status(422).json({ error: "This pharmacy already exists." });
 			}
 
-			await Pharmacy.create(req.body);
+			await Pharmacy.create(req.body.data);
 
 			return res
 				.status(201)
