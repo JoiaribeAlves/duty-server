@@ -19,7 +19,7 @@ class SessionController {
 			const user = await User.findOne({ email }).select("+password");
 
 			if (!user || !(await passwordCompare(password, user.password))) {
-				return res.status(404).json({ error: "User or Password invalid." });
+				return res.status(401).json({ error: "User or Password invalid." });
 			}
 
 			return res.status(200).json({
