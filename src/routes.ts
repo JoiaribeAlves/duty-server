@@ -37,9 +37,9 @@ router.patch("/update/user/:id", UserController.update);
 router.delete("/delete/user/:id", UserController.delete);
 
 // Pharmacy
-router.post("/register/pharmacy", PharmacyController.create);
-router.patch("/update/pharmacy/:id", PharmacyController.update);
-router.delete("/delete/pharmacy/:id", PharmacyController.delete);
+router.post("/pharmacies/register", PharmacyController.create);
+router.patch("/pharmacies/update/:id", PharmacyController.update);
+router.delete("/pharmacies/delete/:id", PharmacyController.delete);
 
 // Duty
 router.post("/register/duty", DutyController.create);
