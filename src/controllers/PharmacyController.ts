@@ -90,13 +90,13 @@ class PharmacyController {
 		const { id } = req.params;
 
 		try {
-			const pharmacy = await Pharmacy.findById(id);
+			const pharmacy = await Pharmacy.findOne({ _id: id });
 
 			if (!pharmacy) {
 				return res.status(404).json({ error: "Pharmacy not found." });
 			}
 
-			await Pharmacy.updateOne({ _id: id }, req.body);
+			await Pharmacy.updateOne({ _id: id }, req.body.data);
 
 			return res
 				.status(200)
