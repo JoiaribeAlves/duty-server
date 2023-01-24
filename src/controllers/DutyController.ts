@@ -33,7 +33,31 @@ class DutyController implements IDutyController {
 	}
 
 	public async read(req: Request, res: Response) {
+		const { month } = req.query;
+
 		try {
+			if (month) {
+				const duties = await Duty.find({ month });
+
+				if (!duties) {
+					return res
+						.status(404)
+						.json({ error: `No duty registered for the month of ${month}.` });
+				}
+
+				const filteredDuties = duties.map((d) => {
+					return {
+						id: d._id,
+						pharmacyId: d.pharmacyId,
+						month: d.month,
+						startDate: d.startDate,
+						endDate: d.endDate,
+					};
+				});
+
+				return res.status(200).json(filteredDuties);
+			}
+
 			const duties = await Duty.find();
 
 			const filteredDuties = duties.map((d) => {
