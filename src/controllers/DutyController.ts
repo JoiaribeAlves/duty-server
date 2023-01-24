@@ -15,7 +15,7 @@ interface IDutyController {
 
 class DutyController implements IDutyController {
 	public async create(req: Request, res: Response) {
-		const { startDate } = req.body;
+		const { startDate } = req.body.data;
 
 		try {
 			const duty = await Duty.findOne({ startDate });
@@ -24,7 +24,7 @@ class DutyController implements IDutyController {
 				return res.status(422).json({ error: "Unavailable date." });
 			}
 
-			await Duty.create(req.body);
+			await Duty.create(req.body.data);
 
 			return res.status(201).json({ message: "Duty created successfully." });
 		} catch (error) {
