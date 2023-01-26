@@ -22,7 +22,6 @@ router.get("/pharmacies/:id", PharmacyController.search);
 router.get("/duties", DutyController.read);
 router.get("/duties/date/:date", DutyController.searchByDate);
 router.get("/duties/id/:id", DutyController.searchById);
-router.get("/duties/month/:month", DutyController.searchByMonth);
 
 // Session
 router.post("/session", SessionController.index);
