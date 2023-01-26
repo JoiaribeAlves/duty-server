@@ -11,10 +11,8 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(
 	cors({
-		origin: [
-			`${process.env.FRONTEND_WWW_BASE_URL}`,
-			`${process.env.FRONTEND_ADMIN_BASE_URL}`,
-		],
+		origin: "*",
+		methods: ["GET", "POST", "PATCH", "DELETE"],
 	})
 );
 app.use(router);
