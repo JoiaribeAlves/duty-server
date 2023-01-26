@@ -8,7 +8,6 @@ interface IDutyController {
 	read(req: Request, res: Response): Promise<Response>;
 	searchByDate(req: Request, res: Response): Promise<Response>;
 	searchById(req: Request, res: Response): Promise<Response>;
-	searchByMonth(req: Request, res: Response): Promise<Response>;
 	update(req: Request, res: Response): Promise<Response>;
 	delete(req: Request, res: Response): Promise<Response>;
 }
@@ -157,34 +156,6 @@ class DutyController implements IDutyController {
 			});
 		} catch (error) {
 			return res.status(500).json({ error: "Internal server error. " });
-		}
-	}
-
-	public async searchByMonth(req: Request, res: Response) {
-		const { month } = req.params;
-
-		try {
-			const duties = await Duty.find({ month });
-
-			if (!duties) {
-				return res
-					.status(404)
-					.json({ error: `No duty registered for the month of ${month}.` });
-			}
-
-			const filteredDuties = duties.map((d) => {
-				return {
-					id: d._id,
-					pharmacyId: d.pharmacyId,
-					month: d.month,
-					startDate: d.startDate,
-					endDate: d.endDate,
-				};
-			});
-
-			return res.status(200).json(filteredDuties);
-		} catch (error) {
-			return res.status(500).json({ error: "Internal server error." });
 		}
 	}
 
