@@ -9,7 +9,6 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 const whiteList = [
-	"https://www.plantaodefarmacia.com.br",
 	"https://api.plantaodefarmacia.com.br",
 	"https://admin.plantaodefarmacia.com.br",
 ];
